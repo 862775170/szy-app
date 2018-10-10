@@ -1,0 +1,30 @@
+server: 
+  port: 8081
+
+#mybatis: 
+#  mapper-locations: classpath:mapper/*.xml
+
+#logging.level.org.springframework=DEBUG
+
+spring:  
+  jackson: 
+    date-format: yyyy-MM-dd HH:mm:ss
+  datasource:
+    url: jdbc:mysql://rm-wz9jh8ma85r6ua1rh7o.mysql.rds.aliyuncs.com/sz_cloud?characterEncoding=utf8&useSSL=false
+    username: root
+    password: CEMYun6886
+    driver-class-name: com.mysql.jdbc.Driver 
+
+debug: true
+logging:
+  level:
+#    org.springframework.web: DEBUG
+    com.szy.app: DEBUG
+
+wechat: 
+  miniapp: 
+    appid: wx30e3ae0ede5480bf
+    secret: 38f80d5aa11d860915cd5b7dbf3eeb05
+    token: 111
+    aesKey: 111
+    msgDataFormat: JSON

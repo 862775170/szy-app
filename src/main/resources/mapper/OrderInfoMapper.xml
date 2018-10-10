@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sz.cloud.mapper.OrderInfoMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.sz.cloud.entity.OrderInfo">
+		<id column="order_id" property="orderId" />
+		<result column="car_id" property="carId" />
+		<result column="in_time" property="inTime" />
+		<result column="out_time" property="outTime" />
+		<result column="pay_status" property="payStatus" />
+		<result column="pay_price" property="payPrice" />
+		<result column="parking_id" property="parkingId" />
+	</resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        order_id AS orderId, car_id AS carId, in_time AS inTime, out_time AS outTime, pay_status AS payStatus, pay_price AS payPrice, parking_id AS parkingId
+    </sql>
+
+	<select id="selectAll" resultMap="BaseResultMap">
+		SELECT 
+			order_id, car_id, in_time, out_time, pay_status, pay_price, parking_id
+		FROM 
+			order_info
+	</select>
+	
+	<insert id="insert" parameterType="com.sz.cloud.entity.OrderInfo">
+		INSERT INTO order_info 
+			(order_id, car_id, in_time, out_time, pay_status, pay_price, parking_id) 
+		VALUES
+			(#{orderId}, #{carId}, #{inTime}, #{outTime}, #{payStatus}, #{payPrice}, #{parkingId})
+	</insert>
+	
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO order_info 
+			(order_id, car_id, in_time, out_time, pay_status, pay_price, parking_id) 
+		VALUES
+		<foreach collection="list" item="item" separator=",">  
+            (#{item.orderId}, #{item.carId}, #{item.inTime}, #{item.outTime}, #{item.payStatus}, #{item.payPrice}, #{item.parkingId})
+        </foreach>  
+	</insert>
+	
+	<update id="update" parameterType="com.sz.cloud.entity.OrderInfo">
+		UPDATE order_info 
+		  <trim prefix="set" suffixOverrides=",">
+		  <if test="carId != null" >
+		    car_id=#{carId},
+		  </if>
+		  <if test="inTime != null" >
+		    in_time=#{inTime},
+		  </if>
+		  <if test="outTime != null" >
+		    out_time=#{outTime},
+		  </if>
+		  <if test="payStatus != null" >
+		    pay_status=#{payStatus},
+		  </if>
+		  <if test="payPrice != null" >
+		    pay_price=#{payPrice},
+		  </if>
+		  <if test="parkingId != null" >
+		    parking_id=#{parkingId},
+		  </if>
+		</trim>
+		 WHERE order_id = #{orderId}
+	</update>
+	
+
+	<delete id="delete">
+		DELETE FROM order_info  WHERE order_id = #{orderId}
+	</delete>
+	
+	<select id="findByPrimaryKey" resultType="com.sz.cloud.entity.OrderInfo">
+		SELECT 
+			<include refid="Base_Column_List"></include>
+		FROM 
+			order_info
+		WHERE
+			order_id = #{orderId}
+	</select>
+	
+	
+</mapper>

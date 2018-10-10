@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sz.cloud.mapper.SzUserInfoMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.sz.cloud.entity.SzUserInfo">
+		<id column="id" property="id" />
+		<result column="wx_openid" property="wxOpenid" />
+		<result column="username" property="username" />
+		<result column="password" property="password" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="wx_name" property="wxName" />
+		<result column="wx_imgurl" property="wxImgurl" />
+		<result column="email" property="email" />
+		<result column="mobile" property="mobile" />
+		<result column="reg_time" property="regTime" />
+		<result column="nick_name" property="nickName" />
+	</resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, wx_openid AS wxOpenid, username, password, create_time AS createTime, update_time AS updateTime, wx_name AS wxName, wx_imgurl AS wxImgurl, email, mobile, reg_time AS regTime, nick_name AS nickName
+    </sql>
+
+	<select id="selectAll" resultMap="BaseResultMap">
+		SELECT 
+			id, wx_openid, username, password, create_time, update_time, wx_name, wx_imgurl, email, mobile, reg_time, nick_name
+		FROM 
+			sz_user_info
+	</select>
+	
+	<insert id="insert" parameterType="com.sz.cloud.entity.SzUserInfo">
+		INSERT INTO sz_user_info 
+			(id, wx_openid, username, password, create_time, update_time, wx_name, wx_imgurl, email, mobile, reg_time, nick_name) 
+		VALUES
+			(#{id}, #{wxOpenid}, #{username}, #{password}, #{createTime}, #{updateTime}, #{wxName}, #{wxImgurl}, #{email}, #{mobile}, #{regTime}, #{nickName})
+	</insert>
+	
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO sz_user_info 
+			(id, wx_openid, username, password, create_time, update_time, wx_name, wx_imgurl, email, mobile, reg_time, nick_name) 
+		VALUES
+		<foreach collection="list" item="item" separator=",">  
+            (#{item.id}, #{item.wxOpenid}, #{item.username}, #{item.password}, #{item.createTime}, #{item.updateTime}, #{item.wxName}, #{item.wxImgurl}, #{item.email}, #{item.mobile}, #{item.regTime}, #{item.nickName})
+        </foreach>  
+	</insert>
+	
+	<update id="update" parameterType="com.sz.cloud.entity.SzUserInfo">
+		UPDATE sz_user_info 
+		  <trim prefix="set" suffixOverrides=",">
+		  <if test="wxOpenid != null" >
+		    wx_openid=#{wxOpenid},
+		  </if>
+		  <if test="username != null" >
+		    username=#{username},
+		  </if>
+		  <if test="password != null" >
+		    password=#{password},
+		  </if>
+		  <if test="createTime != null" >
+		    create_time=#{createTime},
+		  </if>
+		  <if test="updateTime != null" >
+		    update_time=#{updateTime},
+		  </if>
+		  <if test="wxName != null" >
+		    wx_name=#{wxName},
+		  </if>
+		  <if test="wxImgurl != null" >
+		    wx_imgurl=#{wxImgurl},
+		  </if>
+		  <if test="email != null" >
+		    email=#{email},
+		  </if>
+		  <if test="mobile != null" >
+		    mobile=#{mobile},
+		  </if>
+		  <if test="regTime != null" >
+		    reg_time=#{regTime},
+		  </if>
+		  <if test="nickName != null" >
+		    nick_name=#{nickName},
+		  </if>
+		</trim>
+		 WHERE id = #{id}
+	</update>
+	
+
+	<delete id="delete">
+		DELETE FROM sz_user_info  WHERE id = #{id}
+	</delete>
+	
+	<select id="findByPrimaryKey" resultType="com.sz.cloud.entity.SzUserInfo">
+		SELECT 
+			<include refid="Base_Column_List"></include>
+		FROM 
+			sz_user_info
+		WHERE
+			id = #{id}
+	</select>
+	
+	
+</mapper>
